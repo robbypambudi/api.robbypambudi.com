@@ -4,6 +4,7 @@ namespace App\Core\Application\Service\UrlShortener;
 
 use App\Core\Domain\Models\Url;
 use App\Core\Domain\Repository\UrlShortenerInterface;
+use App\Core\Application\Service\UrlShortener\UrlShortenerRespond;
 use App\Core\Domain\Models\UrlShortener\UrlShortener;
 use Exception;
 
@@ -24,7 +25,7 @@ class UrlShortenerService
      */
     public function execute(UrlShortenerRequest $request){
         // Find if short url already exist
-        $find = $this->url_shortener_repository->findByShortUrl(new Url($request->getShortUrl()));
+        $find = $this->url_shortener_repository->findByShortUrl($request->getShortUrl());
         if($find){
             throw new \Exception('Short url already exist');
         }
@@ -32,4 +33,16 @@ class UrlShortenerService
 
         $this->url_shortener_repository->persist($url_shortener);
     }
+
+    public function getUrl(string $alias) : UrlShortenerRespond
+    {
+        // Find if short url already exist
+        $find = $this->url_shortener_repository->findByShortUrl($alias);
+
+        if ($find) {
+            return new UrlShortenerRespond($find);
+        }
+        throw new \Exception('Url not found');
+    }
+
 }

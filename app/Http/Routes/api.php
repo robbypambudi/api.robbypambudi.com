@@ -8,8 +8,11 @@ Route::get('hello', function () {
     return response()->json();
 });
 
+// Shortener URL
 Route::post('/create_url', [UrlShortenerController::class, 'createUrl']);
+Route::get('/get_url', [UrlShortenerController::class, 'getUrl']);
 
+// User
 Route::post('/create_user', [UserController::class, 'createUser']);
 Route::post('/login_user', [UserController::class, 'loginUser']);
 

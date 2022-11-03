@@ -32,7 +32,24 @@ class UrlShortenerController extends Controller
         DB::commit();
         return $this->success();
     }
-    // public function create_url( ){
-    //     dd('hello');
-    // }
+
+    public function getUrl(Request $request, UrlShortenerService $service) : JsonResponse
+    {
+        // Query alias
+        $request->validate([
+            'alias' => 'required|string',
+        ]);
+        $alias = $request->get('alias');
+
+        DB::beginTransaction();
+        try {
+            $url = $service->getUrl($alias);
+        } catch (Throwable $e) {
+            DB::rollBack();
+            throw $e;
+        }
+        DB::commit();
+
+        return $this->successWithData($url);
+    }
 }
