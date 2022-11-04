@@ -1,16 +1,153 @@
 {
     "openapi": "3.0.0",
     "info": {
-        "title": "My First API",
-        "version": "0.1"
+        "title": "RobbyPambudi API",
+        "description": "This is a documentation for RobbyPambudi API",
+        "version": "0.1",
+        "contact": {
+            "email": "robbypambudi10@gmail.com"
+        }
     },
+    "servers": [
+        {
+            "url": "https://api.robbypambudi.com/v1",
+            "description": "Production server"
+        },
+        {
+            "url": "http://localhost:8000/v1",
+            "description": "Production server"
+        }
+    ],
+    "tags": [
+        {
+            "name": "Url Shortener",
+            "description": "API for shortening url"
+        }
+    ],
     "paths": {
-        "/": {
-            "get": {
-                "description": "Home page",
+        "/create_url": {
+            "post": {
+                "tags": ["Url Shortener"],
+                "summary": "Create URL Shortener",
+                "description": "Create URL Shortener",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "url": {
+                                        "type": "string",
+                                        "description": "URL to be shortened"
+                                    },
+                                    "short_url": {
+                                        "type": "string",
+                                        "description": "Custom short url"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
                 "responses": {
-                    "default": {
-                        "description": "Welcome page"
+                    "success": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "description": "Status of the response"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "description": "Message of the response"
+                                        },
+                                        "data": {
+                                            "type": "object",
+                                            "properties": {
+                                                "url": {
+                                                    "type": "string",
+                                                    "description": "URL to be shortened"
+                                                },
+                                                "short_url": {
+                                                    "type": "string",
+                                                    "description": "Custom short url"
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+
+        "/get_url": {
+            "get": {
+                "tags": ["Url Shortener"],
+                "summary": "Get URL Shortener",
+                "description": "Get URL Shortener",
+                "parameters": [
+                    {
+                        "name": "alias",
+                        "in": "query",
+                        "description": "Short URL",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "success": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "boolean",
+                                            "description": "Status of the response"
+                                        },
+                                        "data": {
+                                            "type": "object",
+                                            "properties": {
+                                                "short_url": {
+                                                    "type": "string",
+                                                    "description": "Custom short url"
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "error": {
+                        "description": "Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "boolean",
+                                            "description": "Status of the response"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "description": "Message of the response"
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
             }

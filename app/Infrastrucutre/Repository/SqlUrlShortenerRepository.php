@@ -35,7 +35,7 @@ class SqlUrlShortenerRepository implements UrlShortenerInterface
 
         if (!$row) return null;
 
-        return $row->url;
+        return $row->id;
     }
 
     private function constructFromRow($row): UrlShortener
@@ -45,6 +45,11 @@ class SqlUrlShortenerRepository implements UrlShortenerInterface
             new Url($row->url),
             $row->short_url,
         );
+    }
+
+    public function incrementClickCount(UrlShortenerId $id): void
+    {
+        DB::table('url_shortener')->where('id', $id->toString())->increment('click_count');
     }
 
 }

@@ -12,4 +12,6 @@ interface UrlShortenerInterface
     public function find(UrlShortenerId $id): ?UrlShortener;
 
     public function findByShortUrl(string $short_url): ?string;
+
+    public function incrementClickCount(UrlShortenerId $id): void;
 }
