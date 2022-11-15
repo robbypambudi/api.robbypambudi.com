@@ -33,7 +33,7 @@ class LoginUserService
             UserException::throw("user tidak ketemu", 1006, 404);
         }
         $type = $this->user_repository->findByEmail(new Email($request->getEmail()))->getType();
-        
+
         $user->beginVerification()
             ->checkPassword($request->getPassword())
             ->verify();

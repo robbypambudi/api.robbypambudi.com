@@ -3,10 +3,15 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UrlShortenerController;
+use App\Http\Controllers\VisitorController;
 
 Route::get('hello', function () {
     return response()->json();
 });
+
+// Visitor
+Route::get('/visitor', [VisitorController::class, 'visitor']);
+Route::post('/visitor', [VisitorController::class, 'createVisitor']);
 
 // Shortener URL
 Route::post('/create_url', [UrlShortenerController::class, 'createUrl']);
